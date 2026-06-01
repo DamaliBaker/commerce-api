@@ -27,4 +27,5 @@ public class UserEntity {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
+
 }
