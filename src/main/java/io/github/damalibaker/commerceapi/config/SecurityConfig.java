@@ -1,15 +1,20 @@
 package io.github.damalibaker.commerceapi.config;
 
+import io.github.damalibaker.commerceapi.dto.response.ErrorResponse;
 import io.github.damalibaker.commerceapi.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import tools.jackson.databind.ObjectMapper;
+
+import java.time.LocalDateTime;
 
 @Configuration
 public class SecurityConfig {
@@ -21,7 +26,7 @@ public class SecurityConfig {
 
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, ObjectMapper objectMapper) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session ->
@@ -29,10 +34,40 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth
                             .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
-                            .requestMatchers(HttpMethod.POST, "/api/auth").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
                             .anyRequest().authenticated()
                 )
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(((request, response, authException) -> {
+                            ErrorResponse error = new ErrorResponse(
+                                    LocalDateTime.now(),
+                                    HttpStatus.UNAUTHORIZED.value(),
+                                    HttpStatus.UNAUTHORIZED.getReasonPhrase(),
+                                    "Authentication is required to access this resource",
+                                    request.getRequestURI(),
+                                    null
+                            );
+
+                            response.setStatus(HttpStatus.FORBIDDEN.value());
+                            response.setContentType("application/json");
+                            objectMapper.writeValue(response.getWriter(), error);
+                        }))
+                        .accessDeniedHandler(((request, response, accessDeniedException) -> {
+                            ErrorResponse error = new ErrorResponse(
+                                    LocalDateTime.now(),
+                                    HttpStatus.FORBIDDEN.value(),
+                                    HttpStatus.FORBIDDEN.getReasonPhrase(),
+                                    "You do not have permission to access this resource",
+                                    request.getRequestURI(),
+                                    null
+                            );
+
+                            response.setStatus(HttpStatus.FORBIDDEN.value());
+                            response.setContentType("application/json");
+                            objectMapper.writeValue(response.getWriter(), error);
+                        }))
+                );
         return http.build();
     }
     @Bean
