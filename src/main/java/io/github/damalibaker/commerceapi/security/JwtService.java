@@ -21,7 +21,6 @@ public class JwtService {
         this.jwtExpiration = jwtExpiration;
     }
 
-
     public String generateToken(String email) {
         Date now = new Date();
         Date exp = new Date(now.getTime() + jwtExpiration);
@@ -57,4 +56,6 @@ public class JwtService {
 
         return tokenEmail.equals(email) && !isTokenExpired(token);
     }
+
+
 }
