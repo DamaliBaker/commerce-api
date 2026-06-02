@@ -1,0 +1,67 @@
+package io.github.damalibaker.commerceapi.controller;
+
+import io.github.damalibaker.commerceapi.dto.request.CreateProductRequest;
+import io.github.damalibaker.commerceapi.dto.request.UpdateProductRequest;
+import io.github.damalibaker.commerceapi.dto.response.ProductResponse;
+import io.github.damalibaker.commerceapi.entity.ProductEntity;
+import io.github.damalibaker.commerceapi.mapper.ProductMapper;
+import io.github.damalibaker.commerceapi.service.AdminProductService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/admin/products")
+public class AdminProductController {
+    private final AdminProductService productService;
+    private final ProductMapper productMapper;
+
+    public AdminProductController(AdminProductService productService,
+                                  ProductMapper productMapper) {
+        this.productService = productService;
+        this.productMapper = productMapper;
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ProductResponse createProduct(@Valid @RequestBody CreateProductRequest request) {
+        return productMapper.toProductResponse(productService.createProduct(request));
+    }
+
+    @GetMapping
+    public List<ProductResponse> getAllProducts() {
+        List<ProductEntity> products = productService.getAllProducts();
+        List<ProductResponse> response = new ArrayList<>();
+
+        products.forEach(product -> response.add(productMapper.toProductResponse(product)));
+
+        return response;
+    }
+
+    @PutMapping("/{id}")
+    public ProductResponse updateProduct(@PathVariable Long id,
+                                         @Valid @RequestBody UpdateProductRequest request) {
+        return productMapper.toProductResponse(productService.updateProduct(id, request));
+    }
+
+    @GetMapping("/{id}")
+    public ProductResponse getProductById(@PathVariable Long id) {
+        return productMapper.toProductResponse(productService.getProductById(id));
+    }
+
+    @PatchMapping("/{id}/deactivate")
+    public ProductResponse deactivateProduct(@PathVariable Long id) {
+        return productMapper.toProductResponse(productService.deactivateProduct(id));
+    }
+
+    @PatchMapping("/{id}/activate")
+    public ProductResponse activateProduct(@PathVariable Long id) {
+        return productMapper.toProductResponse(productService.activateProduct(id));
+    }
+}
+
+
+

@@ -28,10 +28,11 @@ public class UserServiceImpl implements UserService {
         }
 
 
-        UserEntity user = new UserEntity();
-        user.setEmail(request.getEmail());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRole(Role.ROLE_CUSTOMER);
+        UserEntity user = UserEntity.builder()
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role(Role.ROLE_CUSTOMER)
+                .build();
 
         return userRepository.save(user);
     }
