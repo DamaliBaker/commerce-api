@@ -5,4 +5,5 @@ import io.github.damalibaker.commerceapi.entity.UserEntity;
 
 public interface UserService {
     UserEntity register(RegisterRequest request);
+    UserEntity getCurrentUser();
 }

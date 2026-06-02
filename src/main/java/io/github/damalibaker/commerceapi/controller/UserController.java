@@ -25,4 +25,9 @@ public class UserController {
     public UserResponse register(@RequestBody @Valid RegisterRequest request) {
         return userMapper.toUserResponse(userService.register(request));
     }
+
+    @GetMapping("/me")
+    public UserResponse getCurrentUser() {
+        return userMapper.toUserResponse(userService.getCurrentUser());
+    }
 }

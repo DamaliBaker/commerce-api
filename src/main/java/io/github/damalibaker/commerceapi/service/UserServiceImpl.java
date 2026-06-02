@@ -4,7 +4,9 @@ import io.github.damalibaker.commerceapi.dto.request.RegisterRequest;
 import io.github.damalibaker.commerceapi.entity.UserEntity;
 import io.github.damalibaker.commerceapi.entity.enums.Role;
 import io.github.damalibaker.commerceapi.exception.EmailAlreadyExistsEception;
+import io.github.damalibaker.commerceapi.exception.InvalidCredentialsException;
 import io.github.damalibaker.commerceapi.repository.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -32,5 +34,19 @@ public class UserServiceImpl implements UserService {
         user.setRole(Role.ROLE_CUSTOMER);
 
         return userRepository.save(user);
+    }
+
+    @Override
+    public UserEntity getCurrentUser() {
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new InvalidCredentialsException();
+        }
+
+        String email = authentication.getName();
+
+        return userRepository.findByEmail(email)
+                .orElseThrow(InvalidCredentialsException::new);
     }
 }
