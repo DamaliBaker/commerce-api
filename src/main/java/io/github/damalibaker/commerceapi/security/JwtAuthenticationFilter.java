@@ -1,6 +1,6 @@
 package io.github.damalibaker.commerceapi.security;
 
-import io.github.damalibaker.commerceapi.repository.UserRepository;
+import io.github.damalibaker.commerceapi.user.repository.UserRepository;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

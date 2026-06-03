@@ -1,6 +1,10 @@
 package io.github.damalibaker.commerceapi.exception;
 
-import io.github.damalibaker.commerceapi.dto.response.ErrorResponse;
+import io.github.damalibaker.commerceapi.exception.category.CategoryAlreadyExistsException;
+import io.github.damalibaker.commerceapi.exception.category.CategoryNotFoundException;
+import io.github.damalibaker.commerceapi.exception.product.ProductNotFoundException;
+import io.github.damalibaker.commerceapi.exception.user.EmailAlreadyExistsEception;
+import io.github.damalibaker.commerceapi.exception.auth.InvalidCredentialsException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

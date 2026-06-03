@@ -1,6 +1,6 @@
 package io.github.damalibaker.commerceapi.config;
 
-import io.github.damalibaker.commerceapi.dto.response.ErrorResponse;
+import io.github.damalibaker.commerceapi.exception.ErrorResponse;
 import io.github.damalibaker.commerceapi.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,8 +1,8 @@
 package io.github.damalibaker.commerceapi.config;
 
-import io.github.damalibaker.commerceapi.entity.UserEntity;
-import io.github.damalibaker.commerceapi.entity.enums.Role;
-import io.github.damalibaker.commerceapi.repository.UserRepository;
+import io.github.damalibaker.commerceapi.user.entity.UserEntity;
+import io.github.damalibaker.commerceapi.user.enums.Role;
+import io.github.damalibaker.commerceapi.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
