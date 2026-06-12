@@ -5,7 +5,7 @@ import io.github.damalibaker.commerceapi.catalog.category.dto.CreateCategoryRequ
 
 import java.util.List;
 
-public interface AdminCategoryService {
+public interface CategoryService {
     CategoryEntity createCategory(CreateCategoryRequest request);
     CategoryEntity updateCategory(Long id, CreateCategoryRequest request);
     void deleteCategoryById(Long id);

@@ -1,7 +1,7 @@
 package io.github.damalibaker.commerceapi.exception.user;
 
-public class EmailAlreadyExistsEception extends RuntimeException {
-    public EmailAlreadyExistsEception(String email) {
+public class EmailAlreadyExistsException extends RuntimeException {
+    public EmailAlreadyExistsException(String email) {
         super("The email '" + email + "' is already taken.");
     }
 }

@@ -3,7 +3,7 @@ package io.github.damalibaker.commerceapi.user.service;
 import io.github.damalibaker.commerceapi.user.dto.RegisterRequest;
 import io.github.damalibaker.commerceapi.user.entity.UserEntity;
 import io.github.damalibaker.commerceapi.user.enums.Role;
-import io.github.damalibaker.commerceapi.exception.user.EmailAlreadyExistsEception;
+import io.github.damalibaker.commerceapi.exception.user.EmailAlreadyExistsException;
 import io.github.damalibaker.commerceapi.exception.auth.InvalidCredentialsException;
 import io.github.damalibaker.commerceapi.user.repository.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())){
-            throw new EmailAlreadyExistsEception(request.getEmail());
+            throw new EmailAlreadyExistsException(request.getEmail());
         }
 
 
