@@ -4,7 +4,7 @@ import io.github.damalibaker.commerceapi.catalog.category.entity.CategoryEntity;
 import io.github.damalibaker.commerceapi.catalog.category.mapper.CategoryMapper;
 import io.github.damalibaker.commerceapi.catalog.category.dto.CategoryResponse;
 import io.github.damalibaker.commerceapi.catalog.category.dto.CreateCategoryRequest;
-import io.github.damalibaker.commerceapi.catalog.category.service.AdminCategoryService;
+import io.github.damalibaker.commerceapi.catalog.category.service.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,11 +15,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/admin/categories")
 public class AdminCategoryController {
-    private final AdminCategoryService categoryService;
+    private final CategoryService categoryService;
     private final CategoryMapper categoryMapper;
 
 
-    public AdminCategoryController(AdminCategoryService categoryService,
+    public AdminCategoryController(CategoryService categoryService,
                                    CategoryMapper categoryMapper) {
         this.categoryService = categoryService;
         this.categoryMapper = categoryMapper;

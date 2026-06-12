@@ -29,7 +29,7 @@ public class ProductEntity {
     private BigDecimal price;
 
     @Column(nullable = false)
-    private Integer quantity;
+    private Integer stockQuantity;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

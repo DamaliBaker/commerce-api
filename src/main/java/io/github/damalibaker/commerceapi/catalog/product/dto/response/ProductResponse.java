@@ -1,4 +1,4 @@
-package io.github.damalibaker.commerceapi.catalog.product.dto;
+package io.github.damalibaker.commerceapi.catalog.product.dto.response;
 import io.github.damalibaker.commerceapi.catalog.product.enums.ProductStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +14,7 @@ public class ProductResponse {
     private String name;
     private String description;
     private BigDecimal price;
-    private Integer quantity;
+    private Integer stockQuantity;
     private ProductStatus status;
     private Long categoryId;
     private String categoryName;

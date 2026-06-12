@@ -1,4 +1,4 @@
-package io.github.damalibaker.commerceapi.catalog.product.dto;
+package io.github.damalibaker.commerceapi.catalog.product.dto.request;
 
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -24,7 +24,7 @@ public class UpdateProductRequest {
 
     @NotNull(message = "Stock quantity is required")
     @Min(value = 0, message = "Stock quantity cannot be negative")
-    private Integer quantity;
+    private Integer stockQuantity;
 
     @NotNull(message = "Category ID is required")
     private Long categoryId;
