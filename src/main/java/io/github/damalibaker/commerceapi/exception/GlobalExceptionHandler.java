@@ -6,6 +6,8 @@ import io.github.damalibaker.commerceapi.exception.cart.InsufficientStockExcepti
 import io.github.damalibaker.commerceapi.exception.cart.InvalidCartQuantityException;
 import io.github.damalibaker.commerceapi.exception.category.CategoryAlreadyExistsException;
 import io.github.damalibaker.commerceapi.exception.category.CategoryNotFoundException;
+import io.github.damalibaker.commerceapi.exception.order.EmptyCartException;
+import io.github.damalibaker.commerceapi.exception.order.OrderNotFoundException;
 import io.github.damalibaker.commerceapi.exception.product.ProductNotFoundException;
 import io.github.damalibaker.commerceapi.exception.user.EmailAlreadyExistsException;
 import io.github.damalibaker.commerceapi.exception.auth.InvalidCredentialsException;
@@ -263,5 +265,39 @@ public class GlobalExceptionHandler {
         );
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+    }
+
+    @ExceptionHandler(EmptyCartException.class)
+    public ResponseEntity<ErrorResponse> handleEmptyCartException(
+            EmptyCartException ex,
+            HttpServletRequest request
+    ) {
+        ErrorResponse error = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                ex.getMessage(),
+                request.getRequestURI(),
+                null
+        );
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(OrderNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleOrderNotFoundException(
+            OrderNotFoundException ex,
+            HttpServletRequest request
+    ) {
+        ErrorResponse error = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.NOT_FOUND.value(),
+                HttpStatus.NOT_FOUND.getReasonPhrase(),
+                ex.getMessage(),
+                request.getRequestURI(),
+                null
+        );
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 }
