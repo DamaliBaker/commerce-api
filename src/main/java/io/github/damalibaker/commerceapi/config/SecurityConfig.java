@@ -50,7 +50,7 @@ public class SecurityConfig {
                                     null
                             );
 
-                            response.setStatus(HttpStatus.FORBIDDEN.value());
+                            response.setStatus(HttpStatus.UNAUTHORIZED.value());
                             response.setContentType("application/json");
                             objectMapper.writeValue(response.getWriter(), error);
                         }))
