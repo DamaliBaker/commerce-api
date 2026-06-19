@@ -1,5 +1,6 @@
 package io.github.damalibaker.commerceapi.cart.dto.response;
 
+import io.github.damalibaker.commerceapi.catalog.product.enums.ProductStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,4 +17,7 @@ public class CartItemResponse {
     private BigDecimal unitPrice;
     private Integer quantity;
     private BigDecimal lineTotal;
+    private ProductStatus productStatus;
+    private Integer availableStock;
+    private boolean available;
 }

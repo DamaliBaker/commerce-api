@@ -15,4 +15,7 @@ public interface ProductService {
     ProductEntity deactivateProduct(Long id);
     ProductEntity activateProduct(Long id);
     ProductEntity updateProductStock(Long id, UpdateProductStockRequest request);
+    List<ProductEntity> getActiveProducts();
+    ProductEntity getActiveProductById(Long id);
+    List<ProductEntity> getActiveProductsByCategory(Long categoryId);
 }

@@ -91,6 +91,25 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.save(product);
     }
 
+    @Override
+    public List<ProductEntity> getActiveProducts() {
+        return productRepository.findByStatus(ProductStatus.ACTIVE);
+    }
+
+    @Override
+    public ProductEntity getActiveProductById(Long id) {
+        return productRepository.findByIdAndStatus(id, ProductStatus.ACTIVE)
+                .orElseThrow(() -> new ProductNotFoundException(id));
+    }
+
+    @Override
+    public List<ProductEntity> getActiveProductsByCategory(Long categoryId) {
+        return productRepository.findByCategoryAndStatus(
+                categoryService.getCategoryById(categoryId),
+                ProductStatus.ACTIVE
+        );
+    }
+
     private String normalizeString(String str) {
         if (str == null || str.isBlank()) {
             return null;
